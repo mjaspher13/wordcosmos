@@ -13,8 +13,12 @@
 <script>
     var socket = io();
 
-    socket.on('count', function(data){
-        $(".count").text(data.count);
+    $(document).ready(function () {
+        socket.emit('connectGame');
+
+        socket.on('count', function(data){
+            $('.count').text(data.count);
+        });
     })
 </script>
 

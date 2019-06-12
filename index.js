@@ -10,6 +10,8 @@ const server = http.listen(port, () => {
     console.log('Server listening on port: ' + port);
 });
 
+var players = [];
+
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
@@ -17,16 +19,24 @@ app.get('/', function (req, res) {
 // Include Socket.io 
 var io = require('socket.io').listen(server); // Check if player connected
 io.on('connect', function (socket) {
+           
+    socket.on('connectGame', function(){
+        players.push(socket.id)
+        emitCount(players.length)
+        console.log(socket.id)
+    })
+    
 
-    emitCount()
-
-    socket.on('disconnect', function (socket) {
-        emitCount()
+    socket.on('disconnect', function () {
+        players.splice(players.indexOf(socket.id), 1)
+        console.log("disco" )
+        console.log(socket.id )
+        console.log("disco" )
+        console.log(players)
+        emitCount(players.length)
     })
 });
 
-function emitCount() {
-    count = io.sockets.server.eio.clientsCount
-    console.log(count);
+function emitCount(count) {
     io.emit('count', { count })
 }
