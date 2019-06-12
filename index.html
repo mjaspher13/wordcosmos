@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <h1 class="count"></h1>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    var socket = io();
+
+    socket.on('count', function(data){
+        $(".count").text(data.count);
+    })
+</script>
+
+</html>
