@@ -23,16 +23,13 @@ io.on('connect', function (socket) {
     socket.on('connectGame', function(){
         players.push(socket.id)
         emitCount(players.length)
-        console.log(socket.id)
+        console.log(players.length)
     })
     
 
     socket.on('disconnect', function () {
         players.splice(players.indexOf(socket.id), 1)
-        console.log("disco" )
-        console.log(socket.id )
-        console.log("disco" )
-        console.log(players)
+        console.log(players.length)
         emitCount(players.length)
     })
 });
